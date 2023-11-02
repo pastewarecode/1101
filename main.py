@@ -1,24 +1,28 @@
 f = open("one_hundred.txt")
 
-max_value = ""
-min_value = "99999"
+max_value = "101"
+min_value = "1"
 
+missing_numbers = []
+all_numbers = set()
+
+#takes all the numbers and splits it up and puts it into a set()
 for line in f:
     if len(line) > 1:
         list_nums = line.split()
         for num in list_nums:
-            if num < min_value:
-                min_value = num
-            if num > max_value:
-                max_value = num
+            all_numbers.add(int(num))
 
-print(f"{min_value}, {max_value}")
-f.seek(0)
+for r in range(int(min_value), int(max_value)):
+    if r not in all_numbers:
+        missing_numbers.append(r)             #run through all numbers to find and gather missing numbers together
 
-for line in f:
-    if len(line) > 1:
-        list_nums = line.split()
-        for num in list_nums:
-            for r in range(int(min_value), int(max_value)):
-                if r != num:
-                    print(f"{r} is not present")
+#determines all the missing numbers
+if missing_numbers:      
+    for number in missing_numbers:
+        print(f"{number} is missing")
+
+#writes out missing numbers in another file
+with open("one_hundred_sorted.txt", "w") as sortedFile:
+    for number in missing_numbers:
+        sortedFile.write(f"{number}\n")
